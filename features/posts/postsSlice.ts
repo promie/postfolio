@@ -6,12 +6,20 @@ const initialState: any = {
   error: null,
   success: false,
   posts: [],
+  currentPage: 1,
 }
 
 const postsSlice = createSlice({
   name: 'posts',
   initialState,
-  reducers: {},
+  reducers: {
+    goToNextPage: state => {
+      state.currentPage += 1
+    },
+    goToPreviousPage: state => {
+      state.currentPage -= 1
+    },
+  },
   extraReducers: builder => {
     // Get posts
     builder.addCase(getPosts.pending, state => {
@@ -32,5 +40,7 @@ const postsSlice = createSlice({
     })
   },
 })
+
+export const { goToNextPage, goToPreviousPage } = postsSlice.actions
 
 export default postsSlice.reducer
