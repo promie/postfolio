@@ -1,18 +1,10 @@
-import { FC, useEffect, useState } from 'react'
+import { FC } from 'react'
+import { useSelector } from 'react-redux'
+import { RootState } from '@store'
 import variables from '@styles/variables.module.scss'
-import { fetchPosts } from '@services/post'
 
 const Home: FC = () => {
-  const [posts, setPosts] = useState([])
-
-  useEffect(() => {
-    const getPosts = async () => {
-      const posts = await fetchPosts(1, 10)
-      setPosts(posts)
-    }
-
-    getPosts()
-  }, [])
+  const { posts } = useSelector((store: RootState) => store.posts)
 
   return <div className={variables.title}>{JSON.stringify(posts, null, 4)}</div>
 }
