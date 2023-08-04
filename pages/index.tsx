@@ -1,12 +1,13 @@
 import { FC } from 'react'
-import { useSelector } from 'react-redux'
-import { RootState } from '@store'
 import variables from '@styles/variables.module.scss'
+import PostResults from '@components/PostResults'
 
 const Home: FC = () => {
-  const { posts } = useSelector((store: RootState) => store.posts)
-
-  return <div className={variables.title}>{JSON.stringify(posts, null, 4)}</div>
+  return (
+    <div className={variables.title}>
+      <PostResults />
+    </div>
+  )
 }
 
 export default Home

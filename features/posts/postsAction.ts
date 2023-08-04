@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 
 const getPosts = createAsyncThunk(
   'posts/getPosts',
-  async ({ page, limit }: any, { rejectWithValue }) => {
+  async ({ page, limit = 10 }: any, { rejectWithValue }) => {
     try {
       const response = await fetch(
         `https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=${limit}`,
