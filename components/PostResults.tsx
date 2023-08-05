@@ -1,15 +1,9 @@
-import { FC, useEffect } from 'react'
+import { FC } from 'react'
 import { useSelector } from 'react-redux'
-import { RootState, useAppDispatch } from '@store'
-import { getPosts } from '@features/posts/postsAction'
+import { RootState } from '@store'
 
 const PostResults: FC = () => {
-  const { posts, currentPage } = useSelector((store: RootState) => store.posts)
-  const dispatch = useAppDispatch()
-
-  useEffect(() => {
-    dispatch(getPosts({ page: currentPage, limit: 10 }))
-  }, [dispatch, currentPage])
+  const { posts } = useSelector((store: RootState) => store.posts)
 
   return <div>{JSON.stringify(posts, null, 4)}</div>
 }
