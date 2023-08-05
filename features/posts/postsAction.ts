@@ -22,4 +22,24 @@ const getPosts = createAsyncThunk(
   },
 )
 
-export { getPosts }
+const getPostByUserId = createAsyncThunk(
+  'posts/getPostByUserId',
+  async ({ userId }: any, { rejectWithValue }) => {
+    try {
+      const response = await fetch(
+        `https://jsonplaceholder.typicode.com/posts?userId=${userId}`,
+      )
+
+      const results = await response.json()
+
+      return {
+        posts: results,
+        totalPosts: results?.length,
+      }
+    } catch (error) {
+      return rejectWithValue(error)
+    }
+  },
+)
+
+export { getPosts, getPostByUserId }

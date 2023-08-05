@@ -3,7 +3,7 @@ import AsyncSelect from 'react-select/async'
 import { debounce } from 'lodash'
 import { useSelector } from 'react-redux'
 import { RootState, useAppDispatch } from '@store'
-import { getPosts } from '@features/posts/postsAction'
+import { getPosts, getPostByUserId } from '@features/posts/postsAction'
 
 const UserNameSelect: FC = () => {
   const [selectedOption, setSelectedOption] = useState<any | null>(null)
@@ -12,7 +12,7 @@ const UserNameSelect: FC = () => {
 
   useEffect(() => {
     if (selectedOption) {
-      console.log('selectedOption', selectedOption)
+      dispatch(getPostByUserId({ userId: selectedOption.value }))
     } else {
       dispatch(getPosts({ page: currentPage, limit: 10 }))
     }
@@ -50,8 +50,6 @@ const UserNameSelect: FC = () => {
       return []
     }
   }
-
-  console.log('selectedOption', selectedOption)
 
   return (
     <div>
