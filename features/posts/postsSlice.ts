@@ -32,7 +32,7 @@ const postsSlice = createSlice({
     })
 
     builder.addCase(getPosts.fulfilled, (state, { payload }) => {
-      state.loading = false
+      state.loading = true
       state.posts = payload.posts
       state.totalPosts = payload.totalPosts
       state.success = true
