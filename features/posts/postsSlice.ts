@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { getPosts, getPostByUserId } from './postsAction'
 
 const initialState: any = {
-  loading: false,
+  loading: true,
   error: null,
   success: false,
   posts: [],
@@ -32,7 +32,7 @@ const postsSlice = createSlice({
     })
 
     builder.addCase(getPosts.fulfilled, (state, { payload }) => {
-      state.loading = true
+      state.loading = false
       state.posts = payload.posts
       state.totalPosts = payload.totalPosts
       state.success = true
