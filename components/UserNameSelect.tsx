@@ -4,6 +4,7 @@ import { debounce } from 'lodash'
 import { useSelector } from 'react-redux'
 import { RootState, useAppDispatch } from '@store'
 import { resetCurrentPage } from '@features/posts/postsSlice'
+import { queryUserByUserName } from '@features/user/userAction'
 import { getPosts, getPostByUserId } from '@features/posts/postsAction'
 
 const UserNameSelect: FC = () => {
@@ -35,28 +36,20 @@ const UserNameSelect: FC = () => {
   )
 
   const loadOptions = async (inputValue: string) => {
-    try {
-      if (inputValue.trim() === '') {
-        return []
-      }
-
-      const response = await fetch(
-        `https://jsonplaceholder.typicode.com/users?username_like=${inputValue}`,
-      )
-      const json = await response.json()
-
-      return json
-        .filter((item: any) =>
-          item.username.toLowerCase().includes(inputValue.toLowerCase()),
-        )
-        .map((item: any) => ({
-          value: item.id,
-          label: item.username,
-        }))
-    } catch (error) {
-      console.error('Error during fetching postcodes:', error)
+    if (inputValue.trim() === '') {
       return []
     }
+
+    const results = await queryUserByUserName(inputValue)
+
+    return results
+      .filter((item: any) =>
+        item.username.toLowerCase().includes(inputValue.toLowerCase()),
+      )
+      .map((item: any) => ({
+        value: item.id,
+        label: item.username,
+      }))
   }
 
   return (
