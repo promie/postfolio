@@ -3,6 +3,7 @@ import AsyncSelect from 'react-select/async'
 import { debounce } from 'lodash'
 import { useSelector } from 'react-redux'
 import { RootState, useAppDispatch } from '@store'
+import { resetCurrentPage } from '@features/posts/postsSlice'
 import { getPosts, getPostByUserId } from '@features/posts/postsAction'
 
 const UserNameSelect: FC = () => {
@@ -12,8 +13,15 @@ const UserNameSelect: FC = () => {
 
   useEffect(() => {
     if (selectedOption) {
-      dispatch(getPostByUserId({ userId: selectedOption.value }))
+      // If there is an option
+      dispatch(
+        getPostByUserId({ userId: selectedOption.value, page: 1, limit: 10 }),
+      )
+
+      // Reset the current page back to the first page in state
+      dispatch(resetCurrentPage())
     } else {
+      // If the button is clear, then fetch all the posts
       dispatch(getPosts({ page: currentPage, limit: 10 }))
     }
   }, [selectedOption, dispatch, currentPage])
