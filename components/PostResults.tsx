@@ -4,12 +4,12 @@ import { RootState, useAppDispatch } from '@store'
 import { getPosts } from '@features/posts/postsAction'
 
 const PostResults: FC = () => {
-  const { posts } = useSelector((store: RootState) => store.posts)
+  const { posts, currentPage } = useSelector((store: RootState) => store.posts)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(getPosts({ page: 1, limit: 10 }))
-  }, [dispatch])
+    dispatch(getPosts({ page: currentPage, limit: 10 }))
+  }, [dispatch, currentPage])
 
   return <div>{JSON.stringify(posts, null, 4)}</div>
 }

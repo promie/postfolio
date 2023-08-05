@@ -8,7 +8,14 @@ const getPosts = createAsyncThunk(
         `https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=${limit}`,
       )
 
-      return response.json()
+      const totalPosts = parseInt(
+        response.headers.get('X-Total-Count') as string,
+      )
+
+      return {
+        posts: await response.json(),
+        totalPosts,
+      }
     } catch (error) {
       return rejectWithValue(error)
     }
