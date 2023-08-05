@@ -5,8 +5,12 @@ import { RootState, useAppDispatch } from '@store'
 
 const FIRST_PAGE = 1
 const PaginateButtons: FC = () => {
-  const { currentPage } = useSelector((store: RootState) => store.posts)
+  const { currentPage, posts, totalPosts } = useSelector(
+    (store: RootState) => store.posts,
+  )
   const dispatch = useAppDispatch()
+
+  const hastNextPage = currentPage * posts.length < totalPosts
 
   return (
     <div>
@@ -16,7 +20,9 @@ const PaginateButtons: FC = () => {
       >
         Prev
       </button>
-      <button onClick={() => dispatch(goToNextPage())}>Next</button>
+      <button disabled={!hastNextPage} onClick={() => dispatch(goToNextPage())}>
+        Next
+      </button>
     </div>
   )
 }

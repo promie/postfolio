@@ -7,6 +7,7 @@ const initialState: any = {
   success: false,
   posts: [],
   currentPage: 1,
+  totalPosts: 0,
 }
 
 const postsSlice = createSlice({
@@ -29,13 +30,15 @@ const postsSlice = createSlice({
 
     builder.addCase(getPosts.fulfilled, (state, { payload }) => {
       state.loading = false
-      state.posts = payload
+      state.posts = payload.posts
+      state.totalPosts = payload.totalPosts
       state.success = true
     })
 
     builder.addCase(getPosts.rejected, (state, { payload }) => {
       state.loading = false
       state.posts = []
+      state.totalPosts = 0
       state.error = payload
     })
   },
