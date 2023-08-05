@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { getPosts, getPostByUserId } from './postsAction'
 
 const initialState: any = {
-  loading: false,
+  loading: true,
   error: null,
   success: false,
   posts: [],
