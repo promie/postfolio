@@ -2,6 +2,7 @@ import { FC } from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '@store'
 import Loader from '@components/Loader'
+import Post from '@components/Post'
 
 const PostResults: FC = () => {
   const { posts, loading } = useSelector((store: RootState) => store.posts)
@@ -13,7 +14,17 @@ const PostResults: FC = () => {
       ) : (
         <>
           <hr className="my-2 border-gray-300 w-full" />
-          <div>{JSON.stringify(posts, null, 4)}</div>
+
+          <div className="flex flex-wrap flex-col md:flex-row justify-around">
+            {posts.map((post: any) => (
+              <Post
+                key={post.id}
+                title={post.title}
+                body={post.body}
+                user={post.user}
+              />
+            ))}
+          </div>
         </>
       )}
     </div>

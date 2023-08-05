@@ -5,7 +5,7 @@ import PostResults from '@components/PostResults'
 
 const Home: FC = () => {
   return (
-    <div className="px-[15px]">
+    <div className="px-[15px] md:px-[500px]">
       <UserNameSelect />
       <PaginateButtons />
       <PostResults />

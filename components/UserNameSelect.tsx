@@ -55,7 +55,7 @@ const UserNameSelect: FC = () => {
   return (
     <div>
       <AsyncSelect
-        placeholder="Search"
+        placeholder="Search by username"
         defaultOptions
         noOptionsMessage={() => 'Type username to search'}
         loadOptions={debouncedLoadOptions}
