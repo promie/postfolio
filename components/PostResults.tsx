@@ -15,7 +15,7 @@ const PostResults: FC = () => {
         <>
           <hr className="my-2 border-gray-300 w-full" />
 
-          <div className="flex flex-wrap flex-col md:flex-row justify-around">
+          <div className="flex flex-wrap flex-col md:flex-row justify-around w-full">
             {posts.map((post: any) => (
               <Post
                 key={post.id}
