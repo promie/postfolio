@@ -1,23 +1,24 @@
-import { FC } from 'react'
-import { useSelector } from 'react-redux'
+import React, { FC } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { RootState } from '@store'
 import { goToNextPage, goToPreviousPage } from '@features/posts/postsSlice'
-import { RootState, useAppDispatch } from '@store'
 
 const FIRST_PAGE = 1
-const PaginateButtons: FC = () => {
-  const { currentPage, posts, totalPosts } = useSelector(
-    (store: RootState) => store.posts,
-  )
-  const dispatch = useAppDispatch()
+const ITEMS_PER_PAGE = 10
 
-  const hastNextPage = currentPage * posts.length < totalPosts
+const PaginateButtons: FC = () => {
+  const { currentPage, totalPosts } = useSelector(
+    (state: RootState) => state.posts,
+  )
+  const dispatch = useDispatch()
+
+  const totalPages = Math.ceil(totalPosts / ITEMS_PER_PAGE)
 
   return (
-    <div className="flex flex-row mx-auto my-[10px]">
+    <div className="flex flex-row mx-auto my-[20px] justify-center">
       <button
-        type="button"
-        disabled={currentPage === FIRST_PAGE}
         onClick={() => dispatch(goToPreviousPage())}
+        disabled={currentPage === FIRST_PAGE}
         className="bg-blue-500 text-white rounded-l-md border-r border-gray-100 py-1 px-2 disabled:bg-gray-200 disabled:text-gray-500 text-sm"
       >
         <div className="flex flex-row align-middle">
@@ -36,11 +37,16 @@ const PaginateButtons: FC = () => {
           <p className="ml-1">Prev</p>
         </div>
       </button>
+      <div className="flex items-center">
+        <p className="mx-4 text-gray-500 text-sm">
+          Page {currentPage} of {totalPages}
+        </p>
+      </div>
+
       <button
-        type="button"
-        className="bg-blue-500 text-white rounded-r-md py-1 border-l border-gray-200 px-2 disabled:bg-gray-200 disabled:text-gray-500 text-sm"
-        disabled={!hastNextPage}
         onClick={() => dispatch(goToNextPage())}
+        disabled={currentPage === totalPages}
+        className="bg-blue-500 text-white rounded-r-md py-1 px-2 disabled:bg-gray-200 disabled:text-gray-500 text-sm"
       >
         <div className="flex flex-row align-middle">
           <span className="mr-1">Next</span>
