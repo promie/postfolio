@@ -1,6 +1,7 @@
 import { FC, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
+import { IoChevronBackCircleOutline } from 'react-icons/io5'
 import { RootState, useAppDispatch } from '@store'
 import { getPostById } from '@features/posts/postsAction'
 import Loader from '@components/Loader'
@@ -25,13 +26,20 @@ const SinglePost: FC = () => {
         <Loader />
       ) : (
         <div className="px-[15px] sm:px-[60px] md:px-[250px] lg:px-[275px] xl:px-[400px] 2xl:px-[500px]">
-          <Post
-            key={post.id}
-            id={post.id}
-            title={post.title}
-            body={post.body}
-            user={post.user}
+          <IoChevronBackCircleOutline
+            size={40}
+            color="#5480F2"
+            onClick={() => router.back()}
           />
+          {post && (
+            <Post
+              key={post.id}
+              id={post.id}
+              title={post.title}
+              body={post.body}
+              user={post.user}
+            />
+          )}
         </div>
       )}
     </div>
