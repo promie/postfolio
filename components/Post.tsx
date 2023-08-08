@@ -1,12 +1,14 @@
 import { FC } from 'react'
+import Link from 'next/link'
 
 interface PostProps {
+  id: number
   title: string
   body: string
   user: any
 }
 
-const Post: FC<PostProps> = ({ title, body, user }) => {
+const Post: FC<PostProps> = ({ id, title, body, user }) => {
   return (
     <div className="relative bg-white py-4 px-4 rounded-3xl my-4 shadow-xl mt-[50px]">
       <div className=" w-[50px] h-[50px] text-white flex items-center absolute rounded-full py-4 px-4 bg-blue-500 left-4 -top-2 shadow-xl uppercase justify-center">
@@ -33,7 +35,7 @@ const Post: FC<PostProps> = ({ title, body, user }) => {
           </div>
           <div className="my-[15px]">
             <div className="text-base text-gray-400 font-semibold mt-[30px] hover:underline cursor-pointer">
-              <p>View</p>
+              <Link href={`/post/${id}`}>View</Link>
             </div>
           </div>
         </div>
