@@ -12,6 +12,14 @@ const getPostsWithUsers = async (posts: any) => {
   )
 }
 
+const getUserDetailsForSinglePost = async (userId: any) => {
+  const response = await fetch(
+    `https://jsonplaceholder.typicode.com/users/${userId}`,
+  )
+
+  return response.json()
+}
+
 const getPosts = createAsyncThunk(
   'posts/getPosts',
   async ({ page, limit = 10 }: any, { rejectWithValue }) => {
@@ -66,4 +74,29 @@ const getPostByUserId = createAsyncThunk(
   },
 )
 
-export { getPosts, getPostByUserId }
+const getPostById = createAsyncThunk(
+  'posts/getPostById',
+  async ({ postId }: any, { rejectWithValue }) => {
+    try {
+      const response = await fetch(
+        `https://jsonplaceholder.typicode.com/posts/${postId}`,
+      )
+
+      const post = await response.json()
+
+      // Fetch user data for each post and combine it with the post data
+      const postWithUserDetails = await getUserDetailsForSinglePost(post.userId)
+
+      return {
+        post: {
+          ...post,
+          user: postWithUserDetails,
+        },
+      }
+    } catch (error) {
+      return rejectWithValue(error)
+    }
+  },
+)
+
+export { getPosts, getPostByUserId, getPostById }

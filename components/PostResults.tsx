@@ -19,6 +19,7 @@ const PostResults: FC = () => {
             {posts.map((post: any) => (
               <Post
                 key={post.id}
+                id={post.id}
                 title={post.title}
                 body={post.body}
                 user={post.user}
