@@ -1,12 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { IPost, IPostWithUser, IUser } from '@types'
 
+export const BASE_URL = 'https://jsonplaceholder.typicode.com'
+
 const getPostsWithUsers = async (posts: IPost[]): Promise<IPostWithUser[]> => {
   return await Promise.all(
     posts.map(async (post: IPost) => {
-      const userResponse = await fetch(
-        `https://jsonplaceholder.typicode.com/users/${post.userId}`,
-      )
+      const userResponse = await fetch(`${BASE_URL}/users/${post.userId}`)
       const user = await userResponse.json()
       return { ...post, user }
     }),
@@ -16,9 +16,7 @@ const getPostsWithUsers = async (posts: IPost[]): Promise<IPostWithUser[]> => {
 const getUserDetailsForSinglePost = async (
   userId: number | string,
 ): Promise<IUser[]> => {
-  const response = await fetch(
-    `https://jsonplaceholder.typicode.com/users/${userId}`,
-  )
+  const response = await fetch(`${BASE_URL}/users/${userId}`)
 
   return response.json()
 }
@@ -31,7 +29,7 @@ const getPosts = createAsyncThunk(
   ) => {
     try {
       const response = await fetch(
-        `https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=${limit}`,
+        `${BASE_URL}/posts?_page=${page}&_limit=${limit}`,
       )
 
       const totalPosts = parseInt(
@@ -65,7 +63,7 @@ const getPostByUserId = createAsyncThunk(
   ) => {
     try {
       const response = await fetch(
-        `https://jsonplaceholder.typicode.com/posts?userId=${userId}&_page=${page}&_limit=${limit}`,
+        `${BASE_URL}/posts?userId=${userId}&_page=${page}&_limit=${limit}`,
       )
 
       const totalPosts = parseInt(
@@ -91,9 +89,7 @@ const getPostById = createAsyncThunk(
   'posts/getPostById',
   async ({ postId }: { postId: number | string }, { rejectWithValue }) => {
     try {
-      const response = await fetch(
-        `https://jsonplaceholder.typicode.com/posts/${postId}`,
-      )
+      const response = await fetch(`${BASE_URL}/posts/${postId}`)
 
       const post = await response.json()
 
