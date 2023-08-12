@@ -1,11 +1,12 @@
 import { FC } from 'react'
 import Link from 'next/link'
+import { IUser } from '@types'
 
 interface PostProps {
   id: number
   title: string
   body: string
-  user: any
+  user: IUser
 }
 
 const Post: FC<PostProps> = ({ id, title, body, user }) => {

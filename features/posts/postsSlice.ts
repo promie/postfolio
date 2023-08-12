@@ -1,7 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { getPosts, getPostByUserId, getPostById } from './postsAction'
+import { IPostWithUser } from '@types'
 
-const initialState: any = {
+interface IInitialState {
+  loading: boolean
+  error: any
+  success: boolean
+  post: IPostWithUser | null
+  posts: IPostWithUser[]
+  currentPage: number
+  totalPosts: number
+}
+
+const initialState: IInitialState = {
   loading: true,
   error: null,
   success: false,

@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
+import { IPost, IPostWithUser, IUser } from '@types'
 
-const getPostsWithUsers = async (posts: any) => {
+const getPostsWithUsers = async (posts: IPost[]): Promise<IPostWithUser[]> => {
   return await Promise.all(
     posts.map(async (post: any) => {
       const userResponse = await fetch(
@@ -12,7 +13,9 @@ const getPostsWithUsers = async (posts: any) => {
   )
 }
 
-const getUserDetailsForSinglePost = async (userId: any) => {
+const getUserDetailsForSinglePost = async (
+  userId: number,
+): Promise<IUser[]> => {
   const response = await fetch(
     `https://jsonplaceholder.typicode.com/users/${userId}`,
   )
@@ -22,7 +25,10 @@ const getUserDetailsForSinglePost = async (userId: any) => {
 
 const getPosts = createAsyncThunk(
   'posts/getPosts',
-  async ({ page, limit = 10 }: any, { rejectWithValue }) => {
+  async (
+    { page, limit = 10 }: { page: number; limit: number },
+    { rejectWithValue },
+  ) => {
     try {
       const response = await fetch(
         `https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=${limit}`,
@@ -49,7 +55,10 @@ const getPosts = createAsyncThunk(
 
 const getPostByUserId = createAsyncThunk(
   'posts/getPostByUserId',
-  async ({ userId, page, limit }: any, { rejectWithValue }) => {
+  async (
+    { userId, page, limit }: { userId: number; page: number; limit: number },
+    { rejectWithValue },
+  ) => {
     try {
       const response = await fetch(
         `https://jsonplaceholder.typicode.com/posts?userId=${userId}&_page=${page}&_limit=${limit}`,
@@ -76,7 +85,7 @@ const getPostByUserId = createAsyncThunk(
 
 const getPostById = createAsyncThunk(
   'posts/getPostById',
-  async ({ postId }: any, { rejectWithValue }) => {
+  async ({ postId }: { postId: number }, { rejectWithValue }) => {
     try {
       const response = await fetch(
         `https://jsonplaceholder.typicode.com/posts/${postId}`,
