@@ -87,7 +87,10 @@ const getPostByUserId = createAsyncThunk(
 
 const getPostById = createAsyncThunk(
   'posts/getPostById',
-  async ({ postId }: { postId: number | string }, { rejectWithValue }) => {
+  async (
+    { postId }: { postId: number | string | string[] },
+    { rejectWithValue },
+  ) => {
     try {
       const response = await fetch(`${BASE_URL}/posts/${postId}`)
 
