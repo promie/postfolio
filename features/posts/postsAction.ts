@@ -3,7 +3,7 @@ import { IPost, IPostWithUser, IUser } from '@types'
 
 const getPostsWithUsers = async (posts: IPost[]): Promise<IPostWithUser[]> => {
   return await Promise.all(
-    posts.map(async (post: any) => {
+    posts.map(async (post: IPost) => {
       const userResponse = await fetch(
         `https://jsonplaceholder.typicode.com/users/${post.userId}`,
       )
@@ -14,7 +14,7 @@ const getPostsWithUsers = async (posts: IPost[]): Promise<IPostWithUser[]> => {
 }
 
 const getUserDetailsForSinglePost = async (
-  userId: number,
+  userId: number | string,
 ): Promise<IUser[]> => {
   const response = await fetch(
     `https://jsonplaceholder.typicode.com/users/${userId}`,
@@ -56,7 +56,11 @@ const getPosts = createAsyncThunk(
 const getPostByUserId = createAsyncThunk(
   'posts/getPostByUserId',
   async (
-    { userId, page, limit }: { userId: number; page: number; limit: number },
+    {
+      userId,
+      page,
+      limit,
+    }: { userId: number | string; page: number; limit: number },
     { rejectWithValue },
   ) => {
     try {
@@ -85,7 +89,7 @@ const getPostByUserId = createAsyncThunk(
 
 const getPostById = createAsyncThunk(
   'posts/getPostById',
-  async ({ postId }: { postId: number }, { rejectWithValue }) => {
+  async ({ postId }: { postId: number | string }, { rejectWithValue }) => {
     try {
       const response = await fetch(
         `https://jsonplaceholder.typicode.com/posts/${postId}`,
