@@ -21,6 +21,9 @@ const postsSlice = createSlice({
     goToPreviousPage: state => {
       state.currentPage -= 1
     },
+    setCurrentPage: (state, { payload }) => {
+      state.currentPage = payload
+    },
     resetCurrentPage: state => {
       state.currentPage = 1
     },
@@ -86,7 +89,11 @@ const postsSlice = createSlice({
   },
 })
 
-export const { goToNextPage, goToPreviousPage, resetCurrentPage } =
-  postsSlice.actions
+export const {
+  goToNextPage,
+  goToPreviousPage,
+  setCurrentPage,
+  resetCurrentPage,
+} = postsSlice.actions
 
 export default postsSlice.reducer
