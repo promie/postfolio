@@ -8,8 +8,13 @@ const Home: FC = () => {
   return (
     <div className="px-[15px] sm:px-[60px] md:px-[250px] lg:px-[275px] xl:px-[400px] 2xl:px-[500px]">
       <UserNameSelect />
-      <PaginationButtons />
-      <PaginateButtons />
+      <div className="hidden md:block">
+        <PaginationButtons />
+      </div>
+
+      <div className="md:hidden">
+        <PaginateButtons />
+      </div>
       <PostResults />
     </div>
   )
